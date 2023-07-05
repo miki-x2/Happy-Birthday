@@ -47,11 +47,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.happybirthday.ui.theme.HappyBirthdayTheme
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +68,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingText(message = "Happy Birthday Sam!", from = "From Emma")
+                    GreetingImage(message = getString(R.string.happy_birthday_text), from = getString(
+                                            R.string.signature_text))
                 }
             }
         }
@@ -89,7 +95,7 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier){
             fontSize = 36.sp,
             modifier = Modifier
                 .padding(16.dp)
-                .align(alignment = Alignment.End)
+                .align(alignment = Alignment.CenterHorizontally)
         )
     }
 
@@ -102,6 +108,51 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier){
 @Composable
 fun BirthdayCardPreview() {
     HappyBirthdayTheme {
-        GreetingText(message = "Happy Birthday Sam!", from = "From Emma")
+        GreetingImage(stringResource(R.string.happy_birthday_text), stringResource(R.string.signature_text))
     }
 }
+
+// An R class is an automatically generated class by Android
+// that contains the IDs of all resources in the project
+// The resource ID is  the same as the filename
+@Composable
+fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier){
+    // painterResource() function loads a drawable image resource
+    // and takes resource ID as an argument
+    val image = painterResource(R.drawable.androidparty)
+    Box {
+        Image(
+            painter = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            alpha = 0.5F
+        )
+        GreetingText(
+            message = message,
+            from = from,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
+        )
+    }
+}
+
+// Modifiers are used to decorate or add behavior to Jetpack Compose UI elements
+// Can add backgrounds, padding or behavior to rows, text, or buttons
+// To set them, a composable or a layout needs to accept a modifer as a parameter
+//
+// Ex: Changing background color to green
+// Text(
+//      text = "Hello World!",
+//      // Solid element background color
+//      modifier = Modifier.background(color = Color.Green)
+// )
+//
+// Add Modifiers to layouts to position the child elements using arrangement and alignment properties
+// To set children's position within a Row, set the horizontalArrangement and verticalAlignment
+// For column, set verticalArrangement and horizontalAlignment
+//
+// Arrangment property is used to arrange the child elements when the size of layout
+// is larger than the sum of its children
+//
+//
